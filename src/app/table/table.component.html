@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="col-12">
+
+<div class="col-12 no-gutters" style="display:inline-flex; padding: 0px; margin-top: 40px;">
+  <input class="form-control" type="search" (keyup)="onSearch($event)" placeholder="Search" style="margin-right: 10px;">
+  <button class="btn btn-outline-success" type="submit" >Search</button>
+</div>
+
+
+
+    <table class="table table-dark table-hover" style="border: 2px solid green; margin-top: 40px;">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Broj</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let korisnik of filteredKorisnici; let i = index">
+          <td>{{korisnik.id}}.</td>
+          <td *ngIf="!korisnik.show; else inputFieldIme">{{korisnik.ime}}</td>
+          <ng-template #inputFieldIme >
+            <td>
+              <input type="text" class="form-control"  [value]="korisnik.ime" #imeInputValue id="imeInputValue" />
+            </td>
+          </ng-template>
+
+          <td *ngIf="!korisnik.show; else inputFieldPrezime">{{korisnik.prezime}}</td>
+          <ng-template #inputFieldPrezime >
+            <td>
+              <input type="text" class="form-control"  [value]="korisnik.prezime" #prezimeInputValue id="prezimeInputValue" />
+            </td>
+          </ng-template>
+
+          <td *ngIf="!korisnik.show; else inputFieldBroj">{{korisnik.broj}}</td>
+          <ng-template #inputFieldBroj >
+            <td>
+              <input type="text" class="form-control"  [value]="korisnik.broj" #brojInputValue id="brojInputValue" />
+            </td>
+          </ng-template>
+
+          <td style="text-align: right;">
+            <button *ngIf="!korisnik.show; else saveBtn" class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 5px;" (click) = "korisnik.show = true">Edit</button>
+            <ng-template #saveBtn >
+              <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 5px;" (click) = "onSave(korisnik.id)">Save</button>
+            </ng-template>
+            <button class="btn btn-danger" (click)="onDelete(korisnik.id)">Delete</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
